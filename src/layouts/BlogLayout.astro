@@ -1,0 +1,36 @@
+---
+import Layout from './Layout.astro'
+import Navbar from '@/components/NavBar/Navbar.astro'
+
+interface Props {
+  title?: string
+}
+
+const { title = '博客' } = Astro.props
+---
+
+<Layout title={title}>
+  <Navbar slot="nav" />
+  <main class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-12 gap-4">
+      <!-- 左侧文章列表 -->
+      <aside class="col-span-3 border-r border-gray-200 dark:border-gray-700">
+        <div class="sticky top-20">
+          <slot name="article-list" />
+        </div>
+      </aside>
+
+      <!-- 中间文章内容 -->
+      <article class="col-span-6 px-6">
+        <slot />
+      </article>
+
+      <!-- 右侧文章目录 -->
+      <aside class="col-span-3 border-l border-gray-200 dark:border-gray-700">
+        <div class="sticky top-20">
+          <slot name="table-of-contents" />
+        </div>
+      </aside>
+    </div>
+  </main>
+</Layout>

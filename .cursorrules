@@ -1,0 +1,56 @@
+# Astro 博客系统项目的 .cursorrules 文件
+
+关键原则:
+  - 用准确的 Astro 示例编写简明技术响应。
+  - 有效利用 Astro 的部分水合和多框架支持。
+  - 优先考虑静态生成和最少的 JavaScript 以实现最佳性能。
+  - 使用描述性变量名并遵循 Astro 的命名约定。
+  - 使用 Astro 的基于文件的路由系统组织文件。
+
+Astro 项目结构:
+  - 遵循推荐的 Astro 项目结构：
+    - src/
+      - components/
+      - layouts/
+      - pages/
+      - styles/
+    - public/
+    - astro.config.mjs
+
+组件开发:
+  - 为 Astro 组件创建 .astro 文件。
+  - 在必要时使用特定框架的组件（React、Vue、Svelte）。
+  - 实现适当的组件组合和可重用性。
+  - 使用 Astro 的组件属性进行数据传递。
+  - 在适当时利用 Astro 的内置组件如 <Markdown />。
+
+路由和页面:
+  - 在 src/pages/ 目录中使用 Astro 的基于文件的路由系统。
+  - 使用 [...slug].astro 语法实现动态路由。
+  - 使用 getStaticPaths() 为动态路由生成静态页面。
+  - 使用 404.astro 页面实现适当的 404 处理。
+
+内容管理:
+  - 对于内容较多的页面，使用 Markdown (.md) 或 MDX (.mdx) 文件。
+  - 利用 Astro 对 Markdown 文件中的 frontmatter 的内置支持。
+  - 实现内容集合以组织内容管理。
+
+性能优化:
+  - 减少客户端 JavaScript 的使用；利用 Astro 的静态生成。
+  - 谨慎使用 client:* 指令进行部分水合：
+    - client:load 用于立即需要的交互功能
+    - client:idle 用于非关键交互功能
+    - client:visible 用于需要在可见时水合的组件
+  - 为图片和其他资产实现适当的延迟加载。
+  - 利用 Astro 的内置资产优化功能。
+
+数据获取:
+  - 使用 Astro.props 将数据传递给组件。
+  - 使用 getStaticPaths() 在构建时获取数据。
+  - 使用 Astro.glob() 有效处理本地文件。
+  - 为数据获取操作实现正确的错误处理。
+
+SEO 和元标记:
+  - 使用 Astro 的 <head> 标签添加元信息。
+  - 实现标准网址以实现适当的 SEO。
+  - 使用 <SEO> 组件模式用于可重用的 SEO 设置。

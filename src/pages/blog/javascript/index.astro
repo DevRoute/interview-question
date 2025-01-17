@@ -1,0 +1,64 @@
+---
+import BlogLayout from '@/layouts/BlogLayout.astro'
+import ArticleList from '@/components/Blog/ArticleList.astro'
+import TableOfContents from '@/components/Blog/TableOfContents.astro'
+
+const articles = [
+  {
+    title: 'JavaScript基础概念',
+    url: '/blog/javascript/basics',
+    category: '基础',
+  },
+  {
+    title: '异步编程',
+    url: '/blog/javascript/async',
+    category: '进阶',
+  },
+  {
+    title: 'ES6+特性',
+    url: '/blog/javascript/es6',
+    category: '进阶',
+  },
+]
+
+const tableOfContents = [
+  {
+    text: '简介',
+    slug: 'intro',
+    depth: 1,
+  },
+  {
+    text: '为什么学习JavaScript',
+    slug: 'why-javascript',
+    depth: 2,
+  },
+  {
+    text: 'JavaScript的发展历史',
+    slug: 'history',
+    depth: 2,
+  },
+]
+---
+
+<BlogLayout title="JavaScript 教程">
+  <ArticleList slot="article-list" articles={articles} currentCategory="JavaScript" />
+
+  <div class="prose dark:prose-invert max-w-none">
+    <h1>JavaScript 教程</h1>
+    <p>
+      JavaScript是一门强大的编程语言，它能让网页具有交互性和动态特性。
+      本教程将帮助你从零开始学习JavaScript，掌握它的核心概念和高级特性。
+    </p>
+
+    <h2 id="intro">简介</h2>
+    <p>JavaScript最初被创建的目的是使网页具有交互性...</p>
+
+    <h3 id="why-javascript">为什么学习JavaScript</h3>
+    <p>JavaScript是web开发中不可或缺的一部分...</p>
+
+    <h3 id="history">JavaScript的发展历史</h3>
+    <p>JavaScript诞生于1995年，由Brendan Eich创造...</p>
+  </div>
+
+  <TableOfContents slot="table-of-contents" toc={tableOfContents} />
+</BlogLayout>

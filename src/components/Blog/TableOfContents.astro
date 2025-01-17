@@ -1,0 +1,45 @@
+---
+interface TocItem {
+  text: string
+  slug: string
+  depth: number
+}
+
+interface Props {
+  toc: TocItem[]
+}
+
+const { toc } = Astro.props
+---
+
+<nav class="toc">
+  <h2 class="text-lg font-bold mb-4">目录</h2>
+  <ul class="space-y-2">
+    {
+      toc.map((item) => (
+        <li class={`pl-${(item.depth - 1) * 4}`}>
+          <a
+            href={`#${item.slug}`}
+            class="block py-1 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          >
+            {item.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .toc {
+    @apply text-sm;
+  }
+
+  .toc a {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+
+  .toc a:hover {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+</style>
