@@ -13,14 +13,14 @@ const { title = '博客' } = Astro.props
   <Navbar slot="nav" />
   <main class="grid grid-cols-12 gap-4 h-full">
     <!-- 左侧文章列表 -->
-    <aside
-      class="col-span-2 pt-4 border-r border-gray-200 dark:border-gray-700 h-[calc(100vh-4rem)] overflow-y-auto"
-    >
-      <slot name="article-list" />
+    <aside class="col-span-2 border-r border-gray-200 dark:border-gray-700">
+      <div class="sticky top-20">
+        <slot name="article-list" />
+      </div>
     </aside>
 
     <!-- 中间文章内容 -->
-    <article class="col-span-8 px-6">
+    <article class="col-span-8 px-6 py-4 overflow-y-auto">
       <slot />
     </article>
 
