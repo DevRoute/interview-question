@@ -1,0 +1,27 @@
+---
+import BlogLayout from '@/layouts/BlogLayout.astro'
+import ArticleList from '@/components/ArticleList.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('reactCollection')
+  return posts.map((post: any) => ({
+    params: { post: post.id },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+// 如果没有找到文章，重定向到404页面
+if (!post) {
+  return Astro.redirect('/404')
+}
+
+// 获取文章内容
+// const { Content } = await post.render()
+---
+
+<BlogLayout title={'javascript'}>
+  <ArticleList type="javascript" post={post} />
+  <div>测试</div>
+</BlogLayout>

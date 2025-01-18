@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 const LanguageSwitcher = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('zh');
+  const [isOpen, setIsOpen] = useState(false)
+  const [currentLang, setCurrentLang] = useState('zh')
 
   const languages = {
     zh: '中文',
     en: 'English',
-  };
+  }
 
   const handleLanguageChange = (lang: keyof typeof languages) => {
-    setCurrentLang(lang);
-    setIsOpen(false);
+    setCurrentLang(lang)
+    setIsOpen(false)
     // 这里可以添加切换语言的逻辑
-  };
+  }
 
   return (
     <div className="relative">
@@ -41,7 +41,7 @@ const LanguageSwitcher = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default LanguageSwitcher; 
+export default LanguageSwitcher
