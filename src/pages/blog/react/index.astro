@@ -1,69 +1,14 @@
 ---
-import BlogLayout from '../../../layouts/BlogLayout.astro'
-import ArticleList from '../../../components/Blog/ArticleList.astro'
-import TableOfContents from '../../../components/Blog/TableOfContents.astro'
+import BlogLayout from '@/layouts/BlogLayout.astro'
+import ArticleList from '@/components/ArticleList.astro'
+import { getCollection } from 'astro:content'
 
-const articles = [
-  {
-    title: 'React 基础入门',
-    url: '/blog/react/basics',
-    category: '基础',
-  },
-  {
-    title: 'Hooks 使用指南',
-    url: '/blog/react/hooks',
-    category: '进阶',
-  },
-  {
-    title: '状态管理',
-    url: '/blog/react/state-management',
-    category: '进阶',
-  },
-  {
-    title: '性能优化',
-    url: '/blog/react/performance',
-    category: '高级',
-  },
-]
+const posts = await getCollection('react')
 
-const tableOfContents = [
-  {
-    text: '什么是 React',
-    slug: 'what-is-react',
-    depth: 1,
-  },
-  {
-    text: 'React 的特点',
-    slug: 'react-features',
-    depth: 2,
-  },
-  {
-    text: '为什么选择 React',
-    slug: 'why-react',
-    depth: 2,
-  },
-]
+const post = posts.find((item) => item.data.isBase)
 ---
 
 <BlogLayout title="React 教程">
-  <ArticleList slot="article-list" articles={articles} currentCategory="React" />
-
-  <div class="prose dark:prose-invert max-w-none">
-    <h1>React 教程</h1>
-    <p>
-      React 是由 Facebook 开发的用于构建用户界面的 JavaScript 库。 通过组件化开发和虚拟 DOM
-      等特性，React 使得构建复杂的单页应用变得简单高效。
-    </p>
-
-    <h2 id="what-is-react">什么是 React</h2>
-    <p>React 是一个声明式的、高效的、灵活的 JavaScript 库，用于构建用户界面...</p>
-
-    <h3 id="react-features">React 的特点</h3>
-    <p>组件化、虚拟 DOM、单向数据流是 React 的三大特性...</p>
-
-    <h3 id="why-react">为什么选择 React</h3>
-    <p>React 拥有强大的生态系统和活跃的社区支持...</p>
-  </div>
-
-  <TableOfContents slot="table-of-contents" toc={tableOfContents} />
+  <ArticleList type="react" post={post} slot="article-list" />
+  <div>我是对应内容介绍页面</div>
 </BlogLayout>

@@ -4,7 +4,7 @@ import ArticleList from '@/components/ArticleList.astro'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('javascript')
+  const posts = await getCollection('network')
   return posts.map((post) => ({
     params: { post: post.id },
     props: { post },
@@ -21,8 +21,8 @@ if (!post) {
 // const { Content } = await post.render()
 ---
 
-<BlogLayout title={'javascript'}>
-  <ArticleList type="javascript" post={post} slot="article-list" />
+<BlogLayout title={'network'}>
+  <ArticleList type="network" post={post} slot="article-list" />
   <!-- <div>测试</div> -->
   <div>
     <h1>{post.data.title}</h1>

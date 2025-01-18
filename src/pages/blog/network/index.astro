@@ -3,12 +3,12 @@ import BlogLayout from '@/layouts/BlogLayout.astro'
 import ArticleList from '@/components/ArticleList.astro'
 import { getCollection } from 'astro:content'
 
-const posts = await getCollection('javascript')
+const posts = await getCollection('network')
 
 const post = posts.find((item) => item.data.isBase)
 ---
 
-<BlogLayout title="JavaScript 教程">
-  <ArticleList type="javascript" post={post} slot="article-list" />
+<BlogLayout title="React 教程">
+  <ArticleList type="network" post={post} slot="article-list" />
   <div>我是对应内容介绍页面</div>
 </BlogLayout>

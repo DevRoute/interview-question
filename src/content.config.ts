@@ -10,6 +10,7 @@ const javascript = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    isBase: z.boolean().default(false),
   }),
 })
 const react = defineCollection({
@@ -21,10 +22,24 @@ const react = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    isBase: z.boolean().default(false),
+  }),
+})
+const network = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/network' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.date(),
+    category: z.string(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+    isBase: z.boolean().default(false),
   }),
 })
 
 export const collections = {
   javascript,
   react,
+  network,
 }
