@@ -92,17 +92,10 @@ export function TocItem({
   }, [isActive])
 
   return (
-    <li
-      ref={itemRef}
-      className={clsx(
-        'overflow-hidden px-4 my-1',
-        depth >= 4 && depth <= 5 && !isActive ? 'text-gray-500' : '',
-        isActive ? 'text-accent border-l-[3px] border-l-accent' : '',
-      )}
-    >
+    <li ref={itemRef} className={clsx('overflow-hidden px-4 my-1', isActive ? 'text-accent' : '')}>
       <a
         href={`#${slug}`}
-        style={{ paddingLeft: `${depth * 10}px` }}
+        style={{ paddingLeft: `${depth * 20}px` }}
         className="block overflow-hidden  "
       >
         <span className={`block whitespace-nowrap overflow-hidden text-ellipsis`}>{text}</span>

@@ -1,4 +1,13 @@
 {
+  "site": {
+    "url": "https://loopy.lxchapu.com",
+    "title": "loopy",
+    "description": "这是一个前端面试题库",
+    "keywords": "loopy,blog,Astro,theme,lxchapu,博客主题",
+    "lang": "zh-CN",
+    "favicon": "/favicon.ico",
+    "appleTouchIcon": "/apple-touch-icon.png"
+  },
   "menu": [
     {
       "name": "首页",
