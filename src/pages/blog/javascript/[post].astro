@@ -1,30 +1,43 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
 import ArticleList from '@/components/ArticleList.astro'
-import { getCollection } from 'astro:content'
+// import PostNav from '@/components/post/PostNav.astro'
+import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
+import SectionBlock from '@/components/post/SectionBlock.astro'
+import { PostToc } from '@/components/post/PostToc.tsx'
+
+import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('javascript')
-  return posts.map((post) => ({
+  return posts.map((post, index) => ({
     params: { post: post.id },
-    props: { post },
+    props: {
+      current: post,
+      prev: index > 1 ? posts[index - 1] : undefined,
+      next: index < posts.length - 1 ? posts[index + 1] : undefined,
+    },
   }))
 }
 
-const { post } = Astro.props
+const { current, prev, next } = Astro.props
 // 如果没有找到文章，重定向到404页面
-if (!post) {
+if (!current) {
   return Astro.redirect('/404')
 }
 
 // 获取文章内容
-// const { Content } = await post.render()
+const { headings, Content, remarkPluginFrontmatter } = await render(current)
 ---
 
 <BlogLayout title={'javascript'}>
-  <ArticleList type="javascript" post={post} slot="article-list" />
-  <!-- <div>测试</div> -->
-  <div>
-    <h1>{post.data.title}</h1>
-  </div>
+  <ArticleList type="javascript" post={current} slot="article-list" />
+  <MarkdownWrapper>
+    <Content />
+    <!-- 底部文章导航，TODO：存在顺序问题 -->
+    <!-- <PostNav prev={prev} next={next} /> -->
+  </MarkdownWrapper>
+  <SectionBlock title="目录" slot="post-contents">
+    <PostToc headings={headings} client:idle />
+  </SectionBlock>
 </BlogLayout>

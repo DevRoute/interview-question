@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro'
 import Navbar from '@/components/NavBar/Navbar.astro'
+import { Provider } from '@/components/provider/Provider'
 
 interface Props {
   title?: string
@@ -10,6 +11,7 @@ const { title = '博客' } = Astro.props
 ---
 
 <Layout title={title}>
+  <Provider client:only="react" />
   <Navbar slot="nav" />
   <main class="grid grid-cols-12 gap-4 h-full">
     <!-- 左侧文章列表 -->

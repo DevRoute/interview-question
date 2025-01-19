@@ -1,6 +1,7 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
 import ArticleList from '@/components/ArticleList.astro'
+import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
@@ -23,8 +24,7 @@ if (!post) {
 
 <BlogLayout title={'network'}>
   <ArticleList type="network" post={post} slot="article-list" />
-  <!-- <div>测试</div> -->
-  <div>
+  <MarkdownWrapper>
     <h1>{post.data.title}</h1>
-  </div>
+  </MarkdownWrapper>
 </BlogLayout>
