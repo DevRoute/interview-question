@@ -7,3 +7,9 @@ draft: false
 tags: ['基础', 'JavaScript']
 isBase: true
 ---
+
+测试
+
+```javascript
+console.log('Hello, world!')
+```

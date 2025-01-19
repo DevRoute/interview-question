@@ -11,23 +11,23 @@
 }
 
 .markdown h1 {
-  @apply text-4xl font-extrabold mb-8;
+  @apply text-3xl font-extrabold mb-5;
 }
 
 .markdown h2 {
-  @apply text-2xl font-bold mt-10 mb-6;
+  @apply text-2xl font-bold mt-8 mb-5;
 }
 
 .markdown h3 {
-  @apply text-xl font-semibold mt-6 mb-3;
+  @apply text-xl font-semibold mt-7 mb-4;
 }
 
 .markdown h4 {
-  @apply font-semibold mt-4 mb-2;
+  @apply font-semibold mt-6 mb-3;
 }
 
 .markdown a {
-  @apply font-normal text-cyan-50 hover:underline underline-offset-2;
+  @apply font-normal text-blue-500 hover:underline underline-offset-2;
 }
 
 .markdown a + .icon-external-link {
@@ -35,16 +35,16 @@
 }
 
 .markdown blockquote {
-  @apply my-5 pl-4 border-l-2 border-cyan-500 text-secondary italic;
+  @apply my-5 pl-4 border-l-2 border-blue-500 text-secondary italic;
 }
 
-.markdown blockquote::before {
+/* .markdown blockquote::before {
   content: '\e793';
   font-family: 'iconfont';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @apply not-italic text-cyan-500;
-}
+} */
 
 .markdown blockquote > p:last-child {
   @apply mb-0;
@@ -55,11 +55,11 @@
 }
 
 .markdown .code-block {
-  @apply relative mt-10 mb-5 bg-secondary rounded-lg;
+  @apply relative mt-6 mb-5 bg-secondary rounded-lg;
 }
 
 .markdown .lang-tag {
-  @apply absolute right-6 -top-6 h-6 px-4 flex items-center rounded-t-lg bg-inherit text-sm;
+  @apply absolute right-6 -top-6 h-6 px-4 flex items-center rounded-t-lg bg-[#25292e] text-white text-sm;
 }
 
 .markdown pre {
@@ -75,7 +75,7 @@
 }
 
 .markdown tr {
-  @apply border-b border-cyan-500;
+  @apply border-b border-blue-500;
 }
 
 .markdown th,
@@ -121,7 +121,7 @@
 }
 
 .markdown hr {
-  @apply my-12 mx-auto max-w-[100px] border-cyan-500;
+  @apply my-12 mx-auto w-full border-gray-300;
 }
 
 .markdown ul {
@@ -134,14 +134,14 @@
 
 .markdown ol,
 .markdown ul {
-  @apply my-5 pl-6 space-y-2;
+  @apply my-2 pl-6 space-y-2;
 }
 
 .markdown ul ul,
 .markdown ul ol,
 .markdown ol ul,
 .markdown ol ol {
-  @apply my-3;
+  @apply my-0;
 }
 
 .markdown .spoiler {

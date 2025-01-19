@@ -133,7 +133,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 </html>
 ```
 
-```
+```javascript
 const var text = "hello world"
 ```
 

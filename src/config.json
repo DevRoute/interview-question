@@ -1,7 +1,7 @@
 {
   "site": {
     "url": "https://loopy.lxchapu.com",
-    "title": "loopy",
+    "title": "loopy的编程秘籍",
     "description": "这是一个前端面试题库",
     "keywords": "loopy,blog,Astro,theme,lxchapu,博客主题",
     "lang": "zh-CN",
