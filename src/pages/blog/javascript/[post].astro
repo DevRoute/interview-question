@@ -1,10 +1,7 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
-import ArticleList from '@/components/ArticleList.astro'
 // import PostNav from '@/components/post/PostNav.astro'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
-import SectionBlock from '@/components/post/SectionBlock.astro'
-import { PostToc } from '@/components/post/PostToc.tsx'
 
 import { getCollection, render } from 'astro:content'
 
@@ -30,14 +27,10 @@ if (!current) {
 const { headings, Content, remarkPluginFrontmatter } = await render(current)
 ---
 
-<BlogLayout title={'javascript'}>
-  <ArticleList type="javascript" post={current} slot="article-list" />
+<BlogLayout title={'javascript'} type="javascript" post={current} headings={headings}>
   <MarkdownWrapper>
     <Content />
     <!-- 底部文章导航，TODO：存在顺序问题 -->
     <!-- <PostNav prev={prev} next={next} /> -->
   </MarkdownWrapper>
-  <SectionBlock title="目录" slot="post-contents">
-    <PostToc headings={headings} client:idle />
-  </SectionBlock>
 </BlogLayout>

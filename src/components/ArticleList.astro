@@ -35,7 +35,7 @@ const menu = transformMenuData(list)
           {item.title}
         </div>
         {item.children && item.children.length > 0 && (
-          <ul>
+          <ul class="border-l border-gray-200">
             {item.children.map((child: any) => (
               <li
                 class={`pl-4 ${child.id === post.id ? 'bg-gray-100 border-l-2 border-blue-500 dark:bg-white/5' : ''}`}

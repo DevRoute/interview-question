@@ -1,7 +1,7 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
-import ArticleList from '@/components/ArticleList.astro'
-import { getCollection } from 'astro:content'
+import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
+import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('react')
@@ -18,12 +18,13 @@ if (!post) {
 }
 
 // 获取文章内容
-// const { Content } = await post.render()
+const { headings, Content, remarkPluginFrontmatter } = await render(post)
 ---
 
-<BlogLayout title={'react'}>
-  <ArticleList type="react" post={post} slot="article-list" />
-  <div>
-    <h1>{post.data.title}</h1>
-  </div>
+<BlogLayout title={'react'} type="react" post={post} headings={headings}>
+  <MarkdownWrapper>
+    <Content />
+    <!-- 底部文章导航，TODO：存在顺序问题 -->
+    <!-- <PostNav prev={prev} next={next} /> -->
+  </MarkdownWrapper>
 </BlogLayout>
