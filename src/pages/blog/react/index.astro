@@ -1,11 +1,13 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
+import { getAllPosts } from '@/utils/content'
 
-const posts = await getCollection('react')
+const posts = await getAllPosts('react')
 
-const post = posts.find((item) => item.data.isBase)
+const post = posts.find((item) => item.data.sticky)
+
 if (!post) {
   return Astro.redirect('/404')
 }
@@ -13,7 +15,7 @@ if (!post) {
 const { headings, Content, remarkPluginFrontmatter } = await render(post)
 ---
 
-<BlogLayout title="React 教程" type="react" post={post} headings={headings}>
+<BlogLayout title="react" type="react" post={post} headings={headings}>
   <MarkdownWrapper>
     <Content />
   </MarkdownWrapper>

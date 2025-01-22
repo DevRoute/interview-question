@@ -1,6 +1,19 @@
 import { getCollection } from 'astro:content'
+import { transformMenuData } from '@/utils/data'
+import type { CollectionEntry } from 'astro:content'
 
 type CollectionType = 'javascript' | 'network' | 'react'
+
+interface PostData {
+  id: string
+  title: string
+  category: string
+  sticky: number
+  description: string
+  pubDate: Date
+  tags: string[]
+  draft: boolean
+}
 
 // 获取所有文章
 export async function getAllPosts(type: CollectionType) {
@@ -21,4 +34,30 @@ export async function getSortedPosts(type: CollectionType) {
       return b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     }
   })
+}
+
+//将文章进行排序，并转换为扁平化数组
+export async function getFlattenedPosts<T extends CollectionType>(posts: CollectionEntry<T>[]) {
+  const menuData = transformMenuData(
+    posts.map(
+      (post) =>
+        ({
+          id: post.id,
+          title: post.data.title,
+          category: post.data.category,
+          sticky: post.data.sticky,
+          description: post.data.description,
+          pubDate: post.data.pubDate,
+          tags: post.data.tags,
+          draft: post.data.draft,
+        }) satisfies PostData,
+    ),
+  )
+
+  return menuData.reduce<{ id: string }[]>((acc, item) => {
+    if ('children' in item && item.children) {
+      return [...acc, ...item.children]
+    }
+    return [...acc, item]
+  }, [])
 }

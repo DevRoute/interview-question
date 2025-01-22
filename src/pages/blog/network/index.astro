@@ -1,11 +1,12 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
+import { getAllPosts } from '@/utils/content'
 
-const posts = await getCollection('network')
+const posts = await getAllPosts('network')
 
-const post = posts.find((item) => item.data.isBase)
+const post = posts.find((item) => item.data.sticky)
 
 if (!post) {
   return Astro.redirect('/404')

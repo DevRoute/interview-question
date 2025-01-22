@@ -1,30 +1,49 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
-import { getCollection, render } from 'astro:content'
-
+import PostNav from '@/components/post/PostNav.astro'
+import { getSortedPosts, getFlattenedPosts } from '@/utils/content'
+import { render } from 'astro:content'
 export async function getStaticPaths() {
-  const posts = await getCollection('network')
-  return posts.map((post) => ({
-    params: { post: post.id },
-    props: { post },
-  }))
+  const posts = await getSortedPosts('network')
+
+  const flattenedPosts = await getFlattenedPosts(posts)
+
+  return flattenedPosts
+    .map((item, index) => {
+      // 找到对应的完整文章数据
+      const post = posts.find((p) => p.id === item.id)
+      if (!post) return null
+
+      return {
+        params: { post: item.id },
+        props: {
+          current: post,
+          prev: index > 0 ? posts.find((p) => p.id === flattenedPosts[index - 1].id) : undefined,
+          next:
+            index < flattenedPosts.length - 1
+              ? posts.find((p) => p.id === flattenedPosts[index + 1].id)
+              : undefined,
+        },
+      }
+    })
+    .filter(Boolean)
 }
 
-const { post } = Astro.props
+const { current, prev, next } = Astro.props
 // 如果没有找到文章，重定向到404页面
-if (!post) {
+if (!current) {
   return Astro.redirect('/404')
 }
 
 // 获取文章内容
-const { headings, Content, remarkPluginFrontmatter } = await render(post)
+const { headings, Content, remarkPluginFrontmatter } = await render(current)
 ---
 
-<BlogLayout title={'network'} type="network" post={post} headings={headings}>
+<BlogLayout title={'network'} type="network" post={current} headings={headings}>
   <MarkdownWrapper>
     <Content />
     <!-- 底部文章导航，TODO：存在顺序问题 -->
-    <!-- <PostNav prev={prev} next={next} /> -->
+    <PostNav prev={prev} next={next} />
   </MarkdownWrapper>
 </BlogLayout>

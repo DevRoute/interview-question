@@ -19,10 +19,12 @@ import { rehypeImage } from './src/plugins/rehypeImage' //图片增强
 import { rehypeHeading } from './src/plugins/rehypeHeading' //标题头部增强
 import { rehypeCodeBlock } from './src/plugins/rehypeCodeBlock' //代码渲染优化
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
   base: '/',
-  integrations: [tailwind(), react()],
+  integrations: [tailwind(), react(), sitemap()],
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
