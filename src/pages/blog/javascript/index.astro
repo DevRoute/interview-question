@@ -6,10 +6,11 @@ import { getCollection, render } from 'astro:content'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
 import SectionBlock from '@/components/post/SectionBlock.astro'
 import { PostToc } from '@/components/post/PostToc.tsx'
+import { getAllPosts } from '@/utils/content'
 
-const posts = await getCollection('javascript')
+const posts = await getAllPosts('javascript')
 
-const post = posts.find((item) => item.data.isBase)
+const post = posts.find((item) => item.data.sticky)
 
 if (!post) {
   return Astro.redirect('/404')

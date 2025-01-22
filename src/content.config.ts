@@ -10,7 +10,7 @@ const javascript = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    isBase: z.boolean().default(false),
+    sticky: z.number().default(0),
   }),
 })
 const react = defineCollection({
@@ -22,7 +22,7 @@ const react = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    isBase: z.boolean().default(false),
+    sticky: z.number().default(0),
   }),
 })
 const network = defineCollection({
@@ -34,7 +34,7 @@ const network = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    isBase: z.boolean().default(false),
+    sticky: z.number().default(0),
   }),
 })
 

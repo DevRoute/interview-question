@@ -1,20 +1,54 @@
 ---
 import BlogLayout from '@/layouts/BlogLayout.astro'
-// import PostNav from '@/components/post/PostNav.astro'
+import PostNav from '@/components/post/PostNav.astro'
 import MarkdownWrapper from '@/components/markdown/MarkdownWrapper.astro'
-
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
+import { getSortedPosts } from '@/utils/content'
+import { transformMenuData } from '@/utils/data'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('javascript')
-  return posts.map((post, index) => ({
-    params: { post: post.id },
-    props: {
-      current: post,
-      prev: index > 1 ? posts[index - 1] : undefined,
-      next: index < posts.length - 1 ? posts[index + 1] : undefined,
-    },
-  }))
+  const posts = await getSortedPosts('javascript')
+  // 将文章数据转换为扁平化的菜单数组，保持与菜单栏相同的顺序
+  const menuData = transformMenuData(
+    posts.map((post) => ({
+      id: post.id,
+      title: post.data.title,
+      category: post.data.category,
+      sticky: post.data.sticky,
+      description: post.data.description,
+      pubDate: post.data.pubDate,
+      tags: post.data.tags,
+      draft: post.data.draft,
+    }))
+  )
+
+  // 将嵌套的菜单数据展平为一维数组
+  const flattenedPosts = menuData.reduce((acc: any[], item) => {
+    if (item.children) {
+      return [...acc, ...item.children]
+    }
+    return [...acc, item]
+  }, [])
+
+  return flattenedPosts
+    .map((item, index) => {
+      // 找到对应的完整文章数据
+      const post = posts.find((p) => p.id === item.id)
+      if (!post) return null
+
+      return {
+        params: { post: item.id },
+        props: {
+          current: post,
+          prev: index > 0 ? posts.find((p) => p.id === flattenedPosts[index - 1].id) : undefined,
+          next:
+            index < flattenedPosts.length - 1
+              ? posts.find((p) => p.id === flattenedPosts[index + 1].id)
+              : undefined,
+        },
+      }
+    })
+    .filter(Boolean)
 }
 
 const { current, prev, next } = Astro.props
@@ -31,6 +65,6 @@ const { headings, Content, remarkPluginFrontmatter } = await render(current)
   <MarkdownWrapper>
     <Content />
     <!-- 底部文章导航，TODO：存在顺序问题 -->
-    <!-- <PostNav prev={prev} next={next} /> -->
+    <PostNav prev={prev} next={next} />
   </MarkdownWrapper>
 </BlogLayout>

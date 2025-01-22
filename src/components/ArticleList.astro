@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content'
 import { transformMenuData } from '@/utils/data'
-
+import { getSortedPosts } from '@/utils/content'
+import { clsx } from 'clsx'
 export interface ListItem {
   id: string
   title: string
@@ -10,13 +11,20 @@ export interface ListItem {
   category: string
   tags: string[]
   draft: boolean
+  sticky: number
 }
 //TODO:Typescript没有设置
 
 const { type, post } = Astro.props
 
 const data = await getCollection(type)
-
+const dataNew = await getSortedPosts(type)
+const listNew = dataNew.map((item: any) => {
+  return {
+    id: item.id,
+    ...item.data,
+  }
+}) as ListItem[]
 const list = data.map((item: any) => {
   return {
     id: item.id,
@@ -25,15 +33,24 @@ const list = data.map((item: any) => {
 }) as ListItem[]
 
 const menu = transformMenuData(list)
+
+const menuNew = transformMenuData(listNew)
+console.log(menuNew)
 ---
 
 <ul class="pl-4">
   {
     menu.map((item) => (
       <li class="font-thin">
-        <div class="text-base font-semibold py-1 text-black dark:text-white capitalize">
-          {item.title}
-        </div>
+        {!item.children ? (
+          <div class={clsx('dark:text-white pb-1', item.id === post.id ? 'text-accent' : '')}>
+            <a href={`/blog/${type}/${item.id}`}>{item.title}</a>
+          </div>
+        ) : (
+          <div class="text-base font-semibold py-1 text-black dark:text-white capitalize">
+            {item.title}
+          </div>
+        )}
         {item.children && item.children.length > 0 && (
           <ul class="border-l border-gray-200">
             {item.children.map((child: any) => (
